@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tourist Attractions Dashboard in Lenggong Geopark</title>
+
+  <!-- Leaflet CSS from CDN plus local fallback rules in style.css -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQbFL0+Jx0bEM9QIf5I1Vg6DxKGLk+k=" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Web-Based GIS Project</p>
+      <h1>Tourist Attractions Dashboard in Lenggong Geopark</h1>
+      <p class="header-desc">
+        Interactive GIS dashboard for official tourist attraction locations, visitor statistics, yearly trends, and simple spatial exploration in Lenggong Geopark, Perak.
+      </p>
+    </div>
+    <div class="header-badge">Perak, Malaysia</div>
+  </header>
+
+  <main class="container">
+    <section class="kpi-grid" id="kpiGrid" aria-label="Dashboard statistic cards"></section>
+
+    <section class="main-grid">
+      <aside class="filter-panel card">
+        <div class="panel-title">
+          <h2>Data Filter</h2>
+          <span id="recordCount">5 records</span>
+        </div>
+        <div class="data-source-status" id="dataSourceStatus">Data source: Loading...</div>
+
+        <label for="searchInput">Search attraction</label>
+        <input id="searchInput" type="search" placeholder="Example: Tasik Raban" />
+
+        <label for="typeFilter">Attraction type</label>
+        <select id="typeFilter"></select>
+
+        <label for="yearSelect">Visitor year</label>
+        <select id="yearSelect">
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025" selected>2025</option>
+          <option value="avg">Average</option>
+        </select>
+
+        <label for="sortSelect">Sort list</label>
+        <select id="sortSelect">
+          <option value="highest">Highest visitors</option>
+          <option value="lowest">Lowest visitors</option>
+          <option value="az">A–Z</option>
+        </select>
+
+        <button id="clearFilters" type="button" class="btn full">Clear Filters</button>
+
+        <div class="small-note">Click any attraction card to zoom to its marker.</div>
+        <div class="site-list" id="siteList" aria-label="Attraction list"></div>
+      </aside>
+
+      <section class="map-card card">
+        <div class="card-heading">
+          <div>
+            <h2>Interactive Attractions Map</h2>
+            <p>OpenStreetMap basemap with coordinate-based point markers.</p>
+          </div>
+          <div class="map-actions">
+            <button id="resetView" type="button" class="btn secondary">Reset View</button>
+            <button id="fitMarkers" type="button" class="btn secondary">Fit Markers</button>
+          </div>
+        </div>
+        <div id="map" role="application" aria-label="Interactive map of Lenggong Geopark tourist attractions"></div>
+        <div class="legend" id="legend"></div>
+      </section>
+    </section>
+
+    <section class="analytics-header">
+      <div>
+        <h2>Dashboard Analytics</h2>
+        <p>Charts and table are calculated from the same attraction dataset used in the GIS map.</p>
+      </div>
+      <span class="selected-year" id="selectedYearLabel">Selected year: 2025</span>
+    </section>
+
+    <section class="charts-grid">
+      <div class="card chart-card">
+        <h3>Visitors by Attraction</h3>
+        <div class="chart-wrapper"><canvas id="barChart"></canvas></div>
+      </div>
+      <div class="card chart-card">
+        <h3>Total Visitor Trend</h3>
+        <div class="chart-wrapper"><canvas id="lineChart"></canvas></div>
+      </div>
+      <div class="card chart-card">
+        <h3>Visitor Share by Attraction</h3>
+        <div class="chart-wrapper"><canvas id="pieChart"></canvas></div>
+      </div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="card table-card">
+        <h3>Attraction Ranking Table</h3>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Site Name</th>
+                <th>Type</th>
+                <th>2025 Visitors</th>
+                <th>Average</th>
+                <th>Growth 2022–2025</th>
+              </tr>
+            </thead>
+            <tbody id="rankingTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card insight-card">
+        <h3>Insights</h3>
+        <div id="insightContent"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Web-Based GIS Project | Lenggong Geopark Tourist Attractions Dashboard
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
